@@ -53,6 +53,7 @@
   --color-elevated: var(--elevated);
   --color-greige: var(--greige);
   --color-border-grey: var(--border-grey);
+  --color-live: var(--live);
 
   /* Typography */
   --font-display: "Space Grotesk", "Inter", sans-serif;
@@ -79,6 +80,7 @@
   --graphite: oklch(0.216 0 0);
   --greige: oklch(0.598 0 0); /* Muted Grey #888888 */
   --border-grey: oklch(0.323 0 0); /* Border Grey #303030 */
+  --live: oklch(0.78 0.13 172); /* live status teal */
 
   --primary: oklch(0.635 0.178 281); /* Accent violet #8B78FF */
   --primary-foreground: oklch(0.145 0 0);
