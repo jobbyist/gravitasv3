@@ -5,23 +5,89 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * GRAVITAS v3 — Visual Design System tokens.
+ * GRAVITAS v3 — Visual Design System tokens (Brand Blueprint, pages 5-7).
  *
- * Palette (from the brand sheet):
- *   Obsidian #090909 · Black #000000 · Graphite #171717 · Elevated #202020
- *   Paper #FFFFFF · Muted Grey #888888 · Border Grey #303030
- *   Accent gradient 110deg: #8FC4D0 (0%) → #8B78FF (52%) → #BCBFFF (100%)
- * Typography: Display/Headline Space Grotesk · Body & UI Inter
+ * Palette    Obsidian #090909 · Black #000000 · Graphite #171717 · Elevated #202020
+ *            Border #303030 · Muted #8B8B8B · Paper #FFFFFF
+ * Gradient   linear-gradient(110deg, #BFC4D0 0%, #8B7BFF 52%, #BCEBFF 100%)
+ *            A signal, never a theme: hero artwork, active navigation, selected
+ *            borders, progress indicators and key interactive states only.
+ *            Never a generic card background.
+ * Type       Display/headline Space Grotesk · body and UI Inter (both self-hosted)
+ *
+ * Keep src/lib/brand-tokens.ts in sync: design-tokens.test.ts enforces it.
  */
 
+/* ------------------------------ Self-hosted fonts ------------------------------ */
+/* Latin subset, variable WOFF2, SIL OFL. font-display: swap. Files live in /public/fonts. */
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallbacks so the swap to the webfont does not shift layout. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 107.58%;
+  ascent-override: 90.05%;
+  descent-override: 22.42%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 111.64%;
+  ascent-override: 88.14%;
+  descent-override: 26.16%;
+  line-gap-override: 0%;
+}
+
+/* ---------------------------------- Theme ---------------------------------- */
+
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  /* Radii: 2 · 8 · 16 · 24 · full. Minimal by design. */
+  --radius-xs: 2px;
+  --radius-sm: 2px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 24px;
+  --radius-3xl: 24px;
+  --radius-4xl: 24px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  /* Motion: 150-250ms, ease-out, opacity and transform only where possible */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Breakpoints: mobile first. 480 · 768 · 1024 · 1280 (sm stays at 640) */
+  --breakpoint-xs: 30rem;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -42,6 +108,7 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
+  --color-control: var(--control);
   --color-ring: var(--ring);
 
   /* Brand accents */
@@ -50,84 +117,88 @@
   --color-accent-c: var(--accent-c);
   --color-obsidian: var(--obsidian);
   --color-graphite: var(--graphite);
-  --color-elevated: var(--elevated);
   --color-greige: var(--greige);
   --color-border-grey: var(--border-grey);
+
+  /* Signal colours */
   --color-live: var(--live);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
 
   /* Typography */
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  --font-display: "Space Grotesk", "Space Grotesk Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+
+  /* Tracking: display tight, eyebrows and metadata wide */
+  --tracking-tight: -0.025em;
+  --tracking-eyebrow: 0.18em;
+  --tracking-meta: 0.16em;
 }
 
-:root {
+/* The interface is dark-only by design; .dark mirrors :root. */
+:root,
+.dark {
+  color-scheme: dark;
   --radius: 0.75rem;
 
   /* Surfaces */
-  --background: oklch(0.145 0 0); /* Obsidian #090909 */
-  --foreground: oklch(0.985 0 0); /* Paper #FFFFFF */
-  --card: oklch(0.216 0 0); /* Graphite #171717 */
-  --card-foreground: oklch(0.985 0 0);
-  --elevated: oklch(0.243 0 0); /* Elevated #202020 */
-  --popover: oklch(0.216 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --background: #090909; /* Obsidian */
+  --foreground: #ffffff; /* Paper */
+  --card: #171717; /* Graphite */
+  --card-foreground: #ffffff;
+  --elevated: #202020;
+  --popover: #171717;
+  --popover-foreground: #ffffff;
 
-  /* Brand accents */
-  --accent-a: oklch(0.772 0.057 205); /* #8FC4D0 */
-  --accent-b: oklch(0.635 0.178 281); /* #8B78FF */
-  --accent-c: oklch(0.755 0.104 277); /* #BCBFFF */
-  --obsidian: oklch(0.145 0 0);
-  --graphite: oklch(0.216 0 0);
-  --greige: oklch(0.598 0 0); /* Muted Grey #888888 */
-  --border-grey: oklch(0.323 0 0); /* Border Grey #303030 */
-  --live: oklch(0.78 0.13 172); /* live status teal */
+  /* Brand accents (gradient stops) */
+  --accent-a: #bfc4d0; /* silver */
+  --accent-b: #8b7bff; /* violet */
+  --accent-c: #bcebff; /* ice */
+  --gradient-accent: linear-gradient(
+    110deg,
+    var(--accent-a) 0%,
+    var(--accent-b) 52%,
+    var(--accent-c) 100%
+  );
+  --obsidian: #090909;
+  --graphite: #171717;
+  --greige: #8b8b8b;
+  --border-grey: #303030;
 
-  --primary: oklch(0.635 0.178 281); /* Accent violet #8B78FF */
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.243 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.243 0 0);
-  --muted-foreground: oklch(0.598 0 0); /* Muted Grey #888888 */
-  --accent: oklch(0.243 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.323 0 0); /* Border Grey #303030 */
-  --input: oklch(0.323 0 0);
-  --ring: oklch(0.635 0.178 281);
-}
+  /* Signal colours */
+  --live: #4ade9b;
+  --success: #4ade9b;
+  --info: #8b7bff;
+  --warning: #f5b14c;
+  --error: #ff6b6b;
 
-/* The interface is dark-only by design; keep .dark identical to :root. */
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.216 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --elevated: oklch(0.243 0 0);
-  --popover: oklch(0.216 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --accent-a: oklch(0.772 0.057 205);
-  --accent-b: oklch(0.635 0.178 281);
-  --accent-c: oklch(0.755 0.104 277);
-  --live: oklch(0.78 0.13 172);
-  --primary: oklch(0.635 0.178 281);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.243 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.243 0 0);
-  --muted-foreground: oklch(0.598 0 0);
-  --accent: oklch(0.243 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.323 0 0);
-  --input: oklch(0.323 0 0);
-  --ring: oklch(0.635 0.178 281);
+  --primary: #8b7bff;
+  --primary-foreground: #090909;
+  --secondary: #202020;
+  --secondary-foreground: #ffffff;
+  --muted: #202020;
+  --muted-foreground: #8b8b8b;
+  --accent: #202020;
+  --accent-foreground: #ffffff;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #090909;
+
+  --border: #303030; /* decorative hairlines */
+  --input: #303030;
+  --control: #6f6f6f; /* form control boundaries, >= 3:1 (WCAG 1.4.11) */
+  --field-bg: #171717;
+  --ring: #8b7bff;
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -137,39 +208,88 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Display / headlines: Space Grotesk, tight tracking. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* Every interactive element gets a visible keyboard focus state. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
   ::selection {
     background-color: color-mix(in oklab, var(--accent-b) 40%, transparent);
     color: var(--color-foreground);
   }
 }
 
-/* Brand gradient, 110deg as specified in the design system */
+/* Motion explains state changes. It never decorates, and it respects the user. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------ Gradient signals ------------------------------ */
+/* Use only for hero artwork, active nav, key interactive states and progress. */
+
 @utility bg-accent-gradient {
-  background-image: linear-gradient(
-    110deg,
-    var(--accent-a) 0%,
-    var(--accent-b) 52%,
-    var(--accent-c) 100%
-  );
+  background-image: var(--gradient-accent);
 }
 
 @utility text-accent-gradient {
-  background-image: linear-gradient(
-    110deg,
-    var(--accent-a) 0%,
-    var(--accent-b) 52%,
-    var(--accent-c) 100%
-  );
+  background-image: var(--gradient-accent);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+/* Focused field: gradient border plus a visible ring. */
+@utility focus-gradient {
+  &:focus-visible,
+  &:focus-within {
+    outline: 2px solid transparent; /* keeps a visible edge in forced-colors mode */
+    border-color: transparent;
+    background-image: linear-gradient(var(--field-bg), var(--field-bg)), var(--gradient-accent);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-b) 35%, transparent);
+  }
+}
+
+/* -------------------------------- Type utilities -------------------------------- */
+
 @utility eyebrow {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+@utility meta-label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }

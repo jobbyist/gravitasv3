@@ -1,11 +1,6 @@
-import { Wordmark } from "./brand";
-import {
-  ArrowRightIcon,
-  DiscordIcon,
-  InstagramIcon,
-  XSocialIcon,
-  YoutubeIcon,
-} from "./icons";
+import { Logo } from "@/components/brand/logo";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { ArrowRightIcon, DiscordIcon, InstagramIcon, XSocialIcon, YoutubeIcon } from "./icons";
 
 const footerNav = ["Studio", "Dispatch", "Community", "Origin", "Portfolio"];
 const footerLegal = ["Privacy", "Terms", "Cookies", "Contact"];
@@ -23,7 +18,7 @@ export function SiteFooter() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,320px)]">
           {/* Brand */}
           <div>
-            <Wordmark />
+            <Logo className="text-sm" />
             <p className="mt-3 text-xs text-muted-foreground">
               Independent. Community-first. AI-powered.
             </p>
@@ -57,26 +52,27 @@ export function SiteFooter() {
 
           {/* Newsletter */}
           <div>
-            <p className="text-sm font-medium text-foreground">
+            <p className="flex items-center gap-2.5 text-sm font-medium text-foreground">
               Join our community
+              <StatusBadge status="coming-soon" />
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Get the latest updates, content and opportunities.
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">Newsletter sign-up opens soon.</p>
             <form
-              className="mt-4 flex items-center rounded-full border border-border bg-card p-1 pl-4"
+              className="focus-gradient mt-4 flex items-center rounded-full border border-control bg-card p-1 pl-4"
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="email"
                 placeholder="Your email address"
                 aria-label="Email address"
-                className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+                disabled
+                className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                aria-label="Subscribe"
-                className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-gradient text-primary-foreground transition-opacity hover:opacity-90"
+                aria-label="Subscribe (coming soon)"
+                disabled
+                className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-gradient text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ArrowRightIcon className="text-base" />
               </button>
