@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Gravitasv3
+
+Build a non functional, responsive prototype for a premium, enterprise grade technology platform called GRAVITAS v3 using the visual design system attached (logos, color codes, typography and icons can be found there) and use the attached landing page design mock-up as a design guide/reference.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://gravitasv3.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/25f40efd-25e3-45d0-a554-c1f9a0025e52).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
