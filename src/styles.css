@@ -109,6 +109,7 @@
   --accent-a: oklch(0.772 0.057 205);
   --accent-b: oklch(0.635 0.178 281);
   --accent-c: oklch(0.755 0.104 277);
+  --live: oklch(0.78 0.13 172);
   --primary: oklch(0.635 0.178 281);
   --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.243 0 0);
