@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { Preloader, PRELOADER_BOOT_SCRIPT } from "../components/brand/preloader";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -18,9 +19,7 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 font-display text-xl font-semibold text-foreground">
-          Page not found
-        </h2>
+        <h2 className="mt-4 font-display text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
         </p>
@@ -75,11 +74,15 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
+const OG_IMAGE = "https://gravitas.wtf/og-image.png";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#090909" },
+      { name: "color-scheme", content: "dark" },
       { title: "Gravitas v3 — Build what comes next." },
       {
         name: "description",
@@ -94,24 +97,44 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Independent, community-first AI venture studio. Ideas. People. Products. Gravitas.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Gravitas" },
+      { property: "og:url", content: "https://gravitas.wtf" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Gravitas v3. Build what comes next." },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Gravitas v3 — Build what comes next." },
+      { name: "twitter:image", content: OG_IMAGE },
+      { name: "twitter:image:alt", content: "Gravitas v3. Build what comes next." },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      // Fonts are self-hosted (public/fonts). Preload the two variable faces used above the fold.
       {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
+        rel: "preload",
+        href: "/fonts/space-grotesk-latin-wght-normal.woff2",
+        as: "font",
+        type: "font/woff2",
         crossOrigin: "anonymous",
       },
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap",
+        rel: "preload",
+        href: "/fonts/inter-latin-wght-normal.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
       },
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "icon", type: "image/svg+xml", href: "/brand/favicon.svg" },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16.png" },
+      { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -125,8 +148,14 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" className="dark">
       <head>
         <HeadContent />
+        {/* Skip the preloader on repeat visits in a session before first paint, and without JS. */}
+        <script dangerouslySetInnerHTML={{ __html: PRELOADER_BOOT_SCRIPT }} />
+        <noscript>
+          <style>{"#gv-preloader{display:none!important}"}</style>
+        </noscript>
       </head>
       <body className="min-h-screen bg-background text-foreground">
+        <Preloader />
         {children}
         <Scripts />
       </body>

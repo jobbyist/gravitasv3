@@ -15,3 +15,26 @@ describe("App routing", () => {
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
 });
+
+describe("Design system route", () => {
+  it("matches /design and marks it noindex", async () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    const matches = router.matchRoutes("/design");
+    const route = matches.at(-1);
+
+    expect(route?.routeId).toBe("/design");
+    const head = await router.routesById["/design"].options.head?.({} as never);
+    const robots = head?.meta?.find((m) => m !== undefined && "name" in m && m.name === "robots");
+    expect(robots).toMatchObject({ content: expect.stringContaining("noindex") });
+  });
+
+  it("is not linked from the primary navigation or footer", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    for (const file of ["nav.tsx", "footer.tsx", "sections.tsx"]) {
+      const source = readFileSync(resolve(__dirname, "../components/landing", file), "utf8");
+      expect(source).not.toMatch(/["'`#/]design["'`]/);
+    }
+  });
+});

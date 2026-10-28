@@ -11,6 +11,11 @@ const alertVariants = cva(
         default: "bg-background text-foreground",
         destructive:
           "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+        /* Blueprint p.7: a coloured left rule on a graphite panel. */
+        success: "border-l-2 border-l-success bg-card text-foreground",
+        info: "border-l-2 border-l-info bg-card text-foreground",
+        warning: "border-l-2 border-l-warning bg-card text-foreground",
+        error: "border-l-2 border-l-error bg-card text-foreground",
       },
     },
     defaultVariants: {
