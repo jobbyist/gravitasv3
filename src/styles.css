@@ -297,3 +297,39 @@
 @utility scroll-fade-b {
   mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
+
+/* -------------------------------- Preloader -------------------------------- */
+
+/* Repeat visits in a session skip it (boot script sets data-preloaded before paint). */
+html[data-preloaded] #gv-preloader {
+  display: none;
+}
+
+.gv-preloader-bar {
+  animation: gv-fill var(--gv-fill-ms, 4500ms) cubic-bezier(0.22, 0.6, 0.3, 1) forwards;
+}
+
+.gv-preloader-emblem {
+  animation: gv-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes gv-fill {
+  from {
+    transform: scaleX(0.02);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes gv-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

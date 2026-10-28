@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { Preloader, PRELOADER_BOOT_SCRIPT } from "../components/brand/preloader";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -73,6 +74,8 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
+const OG_IMAGE = "https://gravitas.wtf/og-image.png";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -94,7 +97,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Independent, community-first AI venture studio. Ideas. People. Products. Gravitas.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Gravitas" },
+      { property: "og:url", content: "https://gravitas.wtf" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Gravitas v3. Build what comes next." },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Gravitas v3 — Build what comes next." },
+      { name: "twitter:image", content: OG_IMAGE },
+      { name: "twitter:image:alt", content: "Gravitas v3. Build what comes next." },
     ],
     links: [
       // Fonts are self-hosted (public/fonts). Preload the two variable faces used above the fold.
@@ -117,6 +130,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", type: "image/svg+xml", href: "/brand/favicon.svg" },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16.png" },
       { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
@@ -132,8 +148,14 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" className="dark">
       <head>
         <HeadContent />
+        {/* Skip the preloader on repeat visits in a session before first paint, and without JS. */}
+        <script dangerouslySetInnerHTML={{ __html: PRELOADER_BOOT_SCRIPT }} />
+        <noscript>
+          <style>{"#gv-preloader{display:none!important}"}</style>
+        </noscript>
       </head>
       <body className="min-h-screen bg-background text-foreground">
+        <Preloader />
         {children}
         <Scripts />
       </body>
