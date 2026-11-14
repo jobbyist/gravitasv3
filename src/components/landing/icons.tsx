@@ -89,14 +89,7 @@ export const CloseIcon = (p: IconProps) => (
 );
 
 export const PlayIcon = (p: IconProps) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    width="1em"
-    height="1em"
-    aria-hidden="true"
-    {...p}
-  >
+  <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" {...p}>
     <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86Z" />
   </svg>
 );
@@ -166,14 +159,7 @@ export const UserIcon = (p: IconProps) => (
 /* Social glyphs (filled) */
 
 export const XSocialIcon = (p: IconProps) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    width="1em"
-    height="1em"
-    aria-hidden="true"
-    {...p}
-  >
+  <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" {...p}>
     <path d="M18.9 1.15h3.68l-8.04 9.19 9.46 12.5h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41Z" />
   </svg>
 );
@@ -205,14 +191,62 @@ export const InstagramIcon = (p: IconProps) => (
 );
 
 export const DiscordIcon = (p: IconProps) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    width="1em"
-    height="1em"
-    aria-hidden="true"
-    {...p}
-  >
+  <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" {...p}>
     <path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.25a18.3 18.3 0 0 0-5.5 0 12.6 12.6 0 0 0-.61-1.25.08.08 0 0 0-.08-.04c-1.71.3-3.35.81-4.88 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01c.12.1.24.2.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.37 1.22 2a.08.08 0 0 0 .08.03 19.84 19.84 0 0 0 6.03-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z" />
   </svg>
+);
+
+function Filled({ children, ...props }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width="1em"
+      height="1em"
+      aria-hidden="true"
+      {...props}
+    >
+      {children}
+    </svg>
+  );
+}
+
+export const SubstackIcon = (p: IconProps) => (
+  <Filled {...p}>
+    <path d="M21 5.2H3V3h18v2.2Zm0 4.2H3V7.2h18v2.2ZM3 11.4V21l9-5 9 5v-9.6H3Z" />
+  </Filled>
+);
+
+export const MediumIcon = (p: IconProps) => (
+  <Filled {...p}>
+    <ellipse cx="6.5" cy="12" rx="5.5" ry="5.8" />
+    <ellipse cx="16.6" cy="12" rx="2.75" ry="5.5" />
+    <ellipse cx="21.6" cy="12" rx="1" ry="5" />
+  </Filled>
+);
+
+export const WhatsAppIcon = (p: IconProps) => (
+  <Filled {...p}>
+    <path d="M12.04 2a9.9 9.9 0 0 0-8.54 14.9L2 22l5.25-1.38A9.9 9.9 0 1 0 12.04 2Zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.22 8.22 0 1 1 6.97 3.86Zm4.51-6.16c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.54.06a6.73 6.73 0 0 1-3.36-2.94c-.25-.44.25-.41.72-1.36.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.47a.9.9 0 0 0-.66.31 2.77 2.77 0 0 0-.86 2.06c0 1.21.88 2.39 1.01 2.55.12.16 1.74 2.66 4.22 3.73 1.57.68 2.18.74 2.97.62.48-.07 1.46-.6 1.67-1.18.2-.58.2-1.08.14-1.18-.06-.11-.23-.17-.47-.29Z" />
+  </Filled>
+);
+
+export const LockIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="4" y="11" width="16" height="10" rx="2" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+  </Base>
+);
+
+export const MailIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m3 7 9 6 9-6" />
+  </Base>
+);
+
+export const ChevronDownIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Base>
 );

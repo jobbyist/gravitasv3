@@ -10,11 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ClientPortalRouteImport } from './routes/client-portal'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DesignRouteImport } from './routes/design'
+import { Route as OriginRouteImport } from './routes/origin'
+import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StudioRouteImport } from './routes/studio'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminFundingRouteImport } from './routes/admin.funding'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
+import { Route as DispatchSlugRouteImport } from './routes/dispatch.$slug'
+import { Route as LegalDocRouteImport } from './routes/legal.$doc'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientPortalRoute = ClientPortalRouteImport.update({
+  id: '/client-portal',
+  path: '/client-portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignRoute = DesignRouteImport.update({
@@ -22,31 +64,213 @@ const DesignRoute = DesignRouteImport.update({
   path: '/design',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OriginRoute = OriginRouteImport.update({
+  id: '/origin',
+  path: '/origin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFundingRoute = AdminFundingRouteImport.update({
+  id: '/funding',
+  path: '/funding',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchIndexRoute = DispatchIndexRouteImport.update({
+  id: '/dispatch/',
+  path: '/dispatch/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchSlugRoute = DispatchSlugRouteImport.update({
+  id: '/dispatch/$slug',
+  path: '/dispatch/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDocRoute = LegalDocRouteImport.update({
+  id: '/legal/$doc',
+  path: '/legal/$doc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/client-portal': typeof ClientPortalRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
   '/design': typeof DesignRoute
+  '/origin': typeof OriginRoute
+  '/partners': typeof PartnersRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/studio': typeof StudioRoute
+  '/admin/funding': typeof AdminFundingRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/dispatch/$slug': typeof DispatchSlugRoute
+  '/legal/$doc': typeof LegalDocRoute
+  '/admin/': typeof AdminIndexRoute
+  '/dispatch/': typeof DispatchIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/client-portal': typeof ClientPortalRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
   '/design': typeof DesignRoute
+  '/origin': typeof OriginRoute
+  '/partners': typeof PartnersRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/studio': typeof StudioRoute
+  '/admin/funding': typeof AdminFundingRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/dispatch/$slug': typeof DispatchSlugRoute
+  '/legal/$doc': typeof LegalDocRoute
+  '/admin': typeof AdminIndexRoute
+  '/dispatch': typeof DispatchIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/client-portal': typeof ClientPortalRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
   '/design': typeof DesignRoute
+  '/origin': typeof OriginRoute
+  '/partners': typeof PartnersRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/studio': typeof StudioRoute
+  '/admin/funding': typeof AdminFundingRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/dispatch/$slug': typeof DispatchSlugRoute
+  '/legal/$doc': typeof LegalDocRoute
+  '/admin/': typeof AdminIndexRoute
+  '/dispatch/': typeof DispatchIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/design'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/client-portal'
+    | '/community'
+    | '/contact'
+    | '/design'
+    | '/origin'
+    | '/partners'
+    | '/portfolio'
+    | '/sign-in'
+    | '/sitemap.xml'
+    | '/studio'
+    | '/admin/funding'
+    | '/auth/callback'
+    | '/dispatch/$slug'
+    | '/legal/$doc'
+    | '/admin/'
+    | '/dispatch/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/design'
-  id: '__root__' | '/' | '/design'
+  to:
+    | '/'
+    | '/about'
+    | '/client-portal'
+    | '/community'
+    | '/contact'
+    | '/design'
+    | '/origin'
+    | '/partners'
+    | '/portfolio'
+    | '/sign-in'
+    | '/sitemap.xml'
+    | '/studio'
+    | '/admin/funding'
+    | '/auth/callback'
+    | '/dispatch/$slug'
+    | '/legal/$doc'
+    | '/admin'
+    | '/dispatch'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/client-portal'
+    | '/community'
+    | '/contact'
+    | '/design'
+    | '/origin'
+    | '/partners'
+    | '/portfolio'
+    | '/sign-in'
+    | '/sitemap.xml'
+    | '/studio'
+    | '/admin/funding'
+    | '/auth/callback'
+    | '/dispatch/$slug'
+    | '/legal/$doc'
+    | '/admin/'
+    | '/dispatch/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  ClientPortalRoute: typeof ClientPortalRoute
+  CommunityRoute: typeof CommunityRoute
+  ContactRoute: typeof ContactRoute
   DesignRoute: typeof DesignRoute
+  OriginRoute: typeof OriginRoute
+  PartnersRoute: typeof PartnersRoute
+  PortfolioRoute: typeof PortfolioRoute
+  SignInRoute: typeof SignInRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StudioRoute: typeof StudioRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  DispatchSlugRoute: typeof DispatchSlugRoute
+  LegalDocRoute: typeof LegalDocRoute
+  DispatchIndexRoute: typeof DispatchIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +282,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client-portal': {
+      id: '/client-portal'
+      path: '/client-portal'
+      fullPath: '/client-portal'
+      preLoaderRoute: typeof ClientPortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/design': {
       id: '/design'
       path: '/design'
@@ -65,12 +324,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/origin': {
+      id: '/origin'
+      path: '/origin'
+      fullPath: '/origin'
+      preLoaderRoute: typeof OriginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/funding': {
+      id: '/admin/funding'
+      path: '/funding'
+      fullPath: '/admin/funding'
+      preLoaderRoute: typeof AdminFundingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch/': {
+      id: '/dispatch/'
+      path: '/dispatch'
+      fullPath: '/dispatch/'
+      preLoaderRoute: typeof DispatchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch/$slug': {
+      id: '/dispatch/$slug'
+      path: '/dispatch/$slug'
+      fullPath: '/dispatch/$slug'
+      preLoaderRoute: typeof DispatchSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/$doc': {
+      id: '/legal/$doc'
+      path: '/legal/$doc'
+      fullPath: '/legal/$doc'
+      preLoaderRoute: typeof LegalDocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminFundingRoute: typeof AdminFundingRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminFundingRoute: AdminFundingRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
+  ClientPortalRoute: ClientPortalRoute,
+  CommunityRoute: CommunityRoute,
+  ContactRoute: ContactRoute,
   DesignRoute: DesignRoute,
+  OriginRoute: OriginRoute,
+  PartnersRoute: PartnersRoute,
+  PortfolioRoute: PortfolioRoute,
+  SignInRoute: SignInRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StudioRoute: StudioRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
+  DispatchSlugRoute: DispatchSlugRoute,
+  LegalDocRoute: LegalDocRoute,
+  DispatchIndexRoute: DispatchIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

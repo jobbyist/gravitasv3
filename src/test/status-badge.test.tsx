@@ -44,7 +44,7 @@ describe("<Logo />", () => {
   it("exposes one accessible name for the horizontal lockup", () => {
     render(<Logo />);
 
-    expect(screen.getByRole("img", { name: "Gravitas v3" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Gravitas" })).toBeInTheDocument();
   });
 
   it("gives each emblem instance its own gradient id", () => {
