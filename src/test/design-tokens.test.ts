@@ -32,7 +32,7 @@ describe("design tokens", () => {
     expect(cssToken("--error")).toBe(signal.error);
   });
 
-  it("uses the blueprint accent gradient (110deg, #BFC4D0 0%, #8B7BFF 52%, #BCEBFF 100%)", () => {
+  it("uses the blueprint accent gradient (110deg, #8FC4D0 0%, #8B78FF 52%, #BCBFFF 100%)", () => {
     expect(accentGradient).toBe("linear-gradient(110deg, #BFC4D0 0%, #8B7BFF 52%, #BCEBFF 100%)");
     expect(css).toMatch(
       /110deg,\s*var\(--accent-a\) 0%,\s*var\(--accent-b\) 52%,\s*var\(--accent-c\) 100%/,
