@@ -153,9 +153,9 @@
   --popover-foreground: #ffffff;
 
   /* Brand accents (gradient stops) */
-  --accent-a: #bfc4d0; /* silver */
-  --accent-b: #8b7bff; /* violet */
-  --accent-c: #bcebff; /* ice */
+  --accent-a: #8fc4d0; /* silver */
+  --accent-b: #8b78ff; /* violet */
+  --accent-c: #bcbfff; /* ice */
   --gradient-accent: linear-gradient(
     110deg,
     var(--accent-a) 0%,
@@ -170,11 +170,11 @@
   /* Signal colours */
   --live: #4ade9b;
   --success: #4ade9b;
-  --info: #8b7bff;
+  --info: #8b78ff;
   --warning: #f5b14c;
   --error: #ff6b6b;
 
-  --primary: #8b7bff;
+  --primary: #8b78ff;
   --primary-foreground: #090909;
   --secondary: #202020;
   --secondary-foreground: #ffffff;
@@ -189,7 +189,7 @@
   --input: #303030;
   --control: #6f6f6f; /* form control boundaries, >= 3:1 (WCAG 1.4.11) */
   --field-bg: #171717;
-  --ring: #8b7bff;
+  --ring: #8b78ff;
 }
 
 @layer base {
