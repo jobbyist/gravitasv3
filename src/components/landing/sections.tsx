@@ -49,14 +49,23 @@ export function Hero() {
             We combine artificial intelligence, creative thinking and engineering to turn ambitious
             ideas into products, platforms and ventures that move things forward.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
+          <div className="mt-9 flex flex-wrap items-center gap-6">
             <Link to="/studio" className={buttonStyles.primary}>
               Explore the Studio
               <ArrowRightIcon className="text-base" />
             </Link>
-            <Link to="/portfolio" className={buttonStyles.secondary}>
-              Explore Our Ventures
-            </Link>
+            <a
+              href="#podcast"
+              aria-label="Watch The Video — Building Gravitas"
+              className="group flex items-center gap-3"
+            >
+              <span className="flex size-11 items-center justify-center rounded-full border border-border text-foreground transition-colors group-hover:bg-elevated">
+                <PlayIcon className="text-sm" />
+              </span>
+              <span className="text-sm font-medium text-foreground transition-colors group-hover:text-accent-c">
+                Watch The Video
+              </span>
+            </a>
           </div>
         </div>
 
