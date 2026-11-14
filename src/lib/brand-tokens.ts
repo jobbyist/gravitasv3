@@ -17,9 +17,9 @@ export const palette = {
 } as const;
 
 export const accent = {
-  silver: "#BFC4D0",
-  violet: "#8B7BFF",
-  ice: "#BCEBFF",
+  silver: "#8FC4D0",
+  violet: "#8B78FF",
+  ice: "#BCBFFF",
 } as const;
 
 /** The one gradient. A signal, never a theme or a card background. */
