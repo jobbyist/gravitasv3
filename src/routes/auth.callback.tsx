@@ -50,7 +50,7 @@ function AuthCallback() {
           return;
         }
       }
-      if (!cancelled) window.location.replace(destination);
+      if (!cancelled) void navigate({ href: destination, replace: true });
     }
 
     void finish();

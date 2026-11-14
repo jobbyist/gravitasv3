@@ -69,16 +69,23 @@ function useApplications() {
   });
 }
 
+/** Writes an audit entry. Throws if it can't, so callers never act unlogged. */
 async function audit(action: string, entityId: string, metadata: Record<string, unknown> = {}) {
   const { data } = await supabase.auth.getUser();
-  if (!data.user) return;
-  await supabase.from("audit_logs").insert({
+  if (!data.user) throw new Error("Your session has expired. Sign in again.");
+  const { error } = await supabase.from("audit_logs").insert({
     actor_id: data.user.id,
     action,
     entity_type: "funding_application",
     entity_id: entityId,
     metadata: metadata as never,
   });
+  if (error) throw new Error(`Couldn't write the audit log: ${error.message}`);
+}
+
+/** Only http(s) links are rendered as anchors, whatever is stored in the row. */
+function safeExternalUrl(url: string | null) {
+  return url && /^https?:\/\//i.test(url) ? url : null;
 }
 
 type Filter = "open" | "all" | FundingStatus;
@@ -710,9 +717,10 @@ function FundingDetail({
 
   const remove = useMutation({
     mutationFn: async () => {
+      // Log first: a delete that can't be audited doesn't happen.
+      await audit("funding.delete", row.id, { programme: row.programme });
       const { error } = await supabase.from("funding_applications").delete().eq("id", row.id);
       if (error) throw new Error(error.message);
-      await audit("funding.delete", row.id, { programme: row.programme });
     },
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: QUERY_KEY });
@@ -754,9 +762,9 @@ function FundingDetail({
         <SheetDescription asChild>
           <div className="flex flex-wrap items-center gap-2">
             <StatusPill status={row.status} />
-            {row.url ? (
+            {safeExternalUrl(row.url) ? (
               <a
-                href={row.url}
+                href={safeExternalUrl(row.url) ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs underline"

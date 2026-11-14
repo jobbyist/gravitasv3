@@ -74,7 +74,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (active) setReady(true);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, next) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, next) => {
+      // The initial session is handled by getSession() above; only react to changes.
+      if (event === "INITIAL_SESSION") return;
       setSession(next);
       // Defer the query so it never runs inside the auth callback's lock.
       setTimeout(() => {
