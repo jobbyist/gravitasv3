@@ -1,6 +1,13 @@
-# Gravitasv3
+# GRAVITAS.WTF
 
-Build a non functional, responsive prototype for a premium, enterprise grade technology platform called GRAVITAS v3 using the visual design system attached (logos, color codes, typography and icons can be found there) and use the attached landing page design mock-up as a design guide/reference.
+An AI-First Venture Studio. *Building things that probably shouldn’t exist. Until they do.*
+
+Production: https://gravitas.wtf · Supabase project: GRAVITAS (v3)
+
+- Setup, environment variables and Supabase Auth: [`docs/SETUP.md`](docs/SETUP.md)
+- Implementation checklist (Prompts 01–08): [`docs/IMPLEMENTATION_CHECKLIST.md`](docs/IMPLEMENTATION_CHECKLIST.md)
+- Changelog: [`CHANGELOG.md`](CHANGELOG.md)
+- Email templates: [`emails/README.md`](emails/README.md)
 
 This project was built with [Lovable](https://lovable.dev).
 

@@ -134,7 +134,7 @@ export function Logo({
     return (
       <span
         role="img"
-        aria-label="Gravitas v3"
+        aria-label="Gravitas"
         className={cn("inline-flex flex-col items-center gap-2", textColor(tone), className)}
       >
         <Emblem tone={tone} className="size-9" />
@@ -142,7 +142,11 @@ export function Logo({
           <span className="font-display text-xs font-medium uppercase tracking-[0.42em] pl-[0.42em]">
             Gravitas
           </span>
-          <span className={cn("text-[7px] font-medium leading-none", mutedColor(tone))}>v3</span>
+          <span
+            className={cn("text-[7px] font-medium leading-none tracking-[0.2em]", mutedColor(tone))}
+          >
+            .WTF
+          </span>
         </span>
       </span>
     );
@@ -151,7 +155,7 @@ export function Logo({
   return (
     <span
       role="img"
-      aria-label="Gravitas v3"
+      aria-label="Gravitas"
       className={cn("inline-flex items-center gap-3", textColor(tone), className)}
     >
       <Emblem tone={tone} className="size-[1.9em]" />
@@ -159,7 +163,14 @@ export function Logo({
         <span className="font-display text-[1em] font-medium uppercase leading-none tracking-[0.42em]">
           Gravitas
         </span>
-        <span className={cn("text-[0.65em] font-medium leading-none", mutedColor(tone))}>v3</span>
+        <span
+          className={cn(
+            "text-[0.65em] font-medium leading-none tracking-[0.2em]",
+            mutedColor(tone),
+          )}
+        >
+          .WTF
+        </span>
       </span>
     </span>
   );

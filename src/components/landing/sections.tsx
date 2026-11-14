@@ -1,22 +1,18 @@
+import { Link } from "@tanstack/react-router";
+
 import planetImg from "@/assets/planet.jpg";
 import podcastImg from "@/assets/podcast.jpg";
-import thumbAi from "@/assets/thumb-ai.jpg";
-import thumbHabits from "@/assets/thumb-habits.jpg";
-import thumbWork from "@/assets/thumb-work.jpg";
+import { buttonStyles } from "@/components/site/page-shell";
 import { StatusBadge } from "@/components/ui/status-badge";
-import type { StatusKey } from "@/lib/status";
+import { formatDate, type ArticleSummary } from "@/lib/dispatch";
+import { ownershipLabel, portfolio } from "@/lib/portfolio";
+import { brand, contact } from "@/lib/site";
 import {
   ArrowRightIcon,
-  BriefcaseIcon,
-  ChevronRightIcon,
   CodeIcon,
-  CompassIcon,
   CpuIcon,
-  FileTextIcon,
-  HeartIcon,
   LayersIcon,
   MessageCircleIcon,
-  MessageSquareIcon,
   PlayIcon,
   SparklesIcon,
 } from "./icons";
@@ -26,7 +22,6 @@ import {
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Planet visual — black background disappears via blend */}
       <img
         src={planetImg}
         alt=""
@@ -34,7 +29,6 @@ export function Hero() {
         height={1024}
         className="pointer-events-none absolute -right-[30%] top-1/2 w-[min(900px,150vw)] -translate-y-[46%] mix-blend-screen lg:-right-[14%] lg:w-[min(920px,70vw)]"
       />
-      {/* Soft accent glow */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -44,66 +38,31 @@ export function Hero() {
         }}
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-24 pt-16 sm:pt-20 md:px-8 lg:min-h-[82vh] lg:grid-cols-[minmax(0,1fr)_auto] lg:pb-28 lg:pt-24">
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-24 pt-16 sm:pt-20 md:px-8 lg:min-h-[78vh] lg:grid-cols-[minmax(0,1fr)_auto] lg:pb-28 lg:pt-24">
         <div className="max-w-2xl">
-          <p className="eyebrow">
-            AI Venture Studio&ensp;/&ensp;Community&ensp;/&ensp;Digital Products
-          </p>
-          <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            Build what
-            <br />
-            comes next
-            <span className="text-accent-b">.</span>
+          <p className="eyebrow">GRAVITAS.WTF&ensp;/&ensp;{brand.positioning}</p>
+          <h1 className="mt-5 font-display text-5xl font-bold leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+            Building things that probably shouldn’t exist.{" "}
+            <span className="text-accent-gradient">Until they do.</span>
           </h1>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-            Gravitas is an independent, community-first AI venture studio building the next
-            generation of digital products, media experiences, tools and services. We combine
-            frontier AI, human creativity and community participation to challenge the status quo
-            and create what's next.
+            We combine artificial intelligence, creative thinking and engineering to turn ambitious
+            ideas into products, platforms and ventures that move things forward.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-6">
-            <a
-              href="#platform"
-              className="inline-flex items-center gap-2 rounded-full bg-accent-gradient px-6 py-3 text-sm font-semibold text-primary-foreground transition-[filter] hover:brightness-110"
-            >
-              Explore the platform
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <Link to="/studio" className={buttonStyles.primary}>
+              Explore the Studio
               <ArrowRightIcon className="text-base" />
-            </a>
-            <button
-              type="button"
-              disabled
-              aria-label="Watch our story (coming soon)"
-              className="flex cursor-not-allowed items-center gap-3 opacity-80"
-            >
-              <span className="flex size-11 items-center justify-center rounded-full border border-control text-foreground">
-                <PlayIcon className="text-sm" />
-              </span>
-              <span className="flex flex-col items-start gap-1.5 text-left">
-                <span className="block text-sm font-medium text-foreground">Watch our story</span>
-                <StatusBadge status="coming-soon" />
-              </span>
-            </button>
+            </Link>
+            <Link to="/portfolio" className={buttonStyles.secondary}>
+              Explore Our Ventures
+            </Link>
           </div>
         </div>
 
-        {/* Vertical manifesto + scroll cue (desktop) */}
-        <div className="hidden flex-col justify-center gap-1 text-sm lg:flex">
-          <span className="text-muted-foreground">Ideas.</span>
-          <span className="text-muted-foreground">People.</span>
-          <span className="text-muted-foreground">Products.</span>
-          <span className="mt-4 text-foreground">Gravitas.</span>
+        <div className="hidden flex-col justify-end gap-1 pb-4 text-sm lg:flex">
+          <span className="meta-label">{brand.tagline}</span>
         </div>
-      </div>
-
-      <div className="absolute bottom-8 right-8 hidden items-center gap-3 lg:flex">
-        <span className="meta-label">Scroll</span>
-        <span
-          aria-hidden="true"
-          className="h-14 w-px"
-          style={{
-            background: "linear-gradient(to bottom, var(--accent-b), transparent)",
-          }}
-        />
       </div>
     </section>
   );
@@ -111,110 +70,106 @@ export function Hero() {
 
 /* --------------------------------- Shared --------------------------------- */
 
-function SectionHeader({
+function SectionIntro({
+  eyebrow,
   title,
-  note,
-  status,
   link,
 }: {
+  eyebrow: string;
   title: string;
-  note?: string;
-  status?: StatusKey;
-  link?: string;
+  link?: { label: string; to: string };
 }) {
   return (
-    <div className="mb-6 flex items-center justify-between gap-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <h2 className="eyebrow !text-foreground">{title}</h2>
-        {note ? (
-          <span className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
-            <span aria-hidden="true">•</span>
-            {note}
-          </span>
-        ) : null}
-        {status ? <StatusBadge status={status} /> : null}
+    <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          {title}
+        </h2>
       </div>
       {link ? (
-        <a
-          href="#"
-          className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+        <Link
+          to={link.to}
+          className="flex shrink-0 items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          {link}
+          {link.label}
           <ArrowRightIcon />
-        </a>
+        </Link>
       ) : null}
     </div>
   );
 }
 
-/* ------------------------------ The Platform ------------------------------ */
+/* ------------------------------- What We Do ------------------------------- */
 
-const platformCards = [
+const offerings = [
   {
     icon: LayersIcon,
     title: "Studio",
-    desc: "Our mission, experiments, roadmap and venture updates.",
-    link: "Explore",
-    status: "core" as StatusKey,
+    desc: "We design, build and run intelligent digital systems for businesses: websites, apps, dashboards, automation and AI assistants.",
   },
   {
-    icon: FileTextIcon,
-    title: "Dispatch",
-    desc: "Daily AI, tech and culture briefs, curated for builders.",
-    link: "Read the latest",
-    status: "core" as StatusKey,
+    icon: SparklesIcon,
+    title: "Ventures",
+    desc: "We build and operate our own AI-enabled products, from skincare intelligence to sports and financial insight.",
   },
   {
-    icon: MessageCircleIcon,
-    title: "Community",
-    desc: "Discuss, share, learn and build together.",
-    link: "Join the conversation",
-    status: "core" as StatusKey,
-  },
-  {
-    icon: CodeIcon,
-    title: "Origin",
-    desc: "AI-assisted app building, pay-as-you-go. Early access by waitlist.",
-    link: "Join the waitlist",
-    status: "waitlist" as StatusKey,
-  },
-  {
-    icon: CompassIcon,
-    title: "Portfolio",
-    desc: "Discover our ventures and participate in what's next.",
-    link: "View ventures",
-    status: "core" as StatusKey,
+    icon: CpuIcon,
+    title: "Infrastructure",
+    desc: "Shared foundations (auth, payments, content and automation) mean every new project starts from a stronger base.",
   },
 ];
 
-export function PlatformSection() {
+export function WhatWeDoSection() {
   return (
-    <section id="platform" className="scroll-mt-20 py-16 lg:py-24">
+    <section id="what-we-do" className="scroll-mt-20 border-t border-border py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <SectionHeader title="The Platform" link="More about Gravitas" />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {platformCards.map((card) => (
+        <SectionIntro
+          eyebrow="What we do"
+          title="A studio that builds for clients and for itself."
+          link={{ label: "Inside the Studio", to: "/studio" }}
+        />
+        <div className="grid gap-4 md:grid-cols-3">
+          {offerings.map((o) => (
+            <div key={o.title} className="rounded-lg border border-border bg-card p-6">
+              <o.icon className="text-2xl text-accent-c" />
+              <h3 className="mt-5 font-display text-xl font-semibold">{o.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{o.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ Selected Work ------------------------------ */
+
+export function SelectedWorkSection() {
+  const selected = portfolio.filter((p) => p.ownership !== "coming-soon").slice(0, 6);
+  return (
+    <section id="work" className="scroll-mt-20 py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionIntro
+          eyebrow="Selected work"
+          title="Ventures we run. Systems we’ve built."
+          link={{ label: "View the portfolio", to: "/portfolio" }}
+        />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {selected.map((p) => (
             <article
-              key={card.title}
-              className="group relative flex flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-muted-foreground/40"
+              key={p.slug}
+              className="flex flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-foreground/30"
             >
-              <div className="flex items-start justify-between gap-2">
-                <card.icon className="text-2xl text-muted-foreground transition-colors group-hover:text-foreground" />
-                <StatusBadge status={card.status} />
+              <div className="flex items-center justify-between gap-3">
+                <span className="meta-label">{ownershipLabel[p.ownership]}</span>
+                {p.status ? <StatusBadge status={p.status} /> : null}
               </div>
-              <h3 className="mt-5 font-display text-lg font-semibold text-foreground">
-                {card.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {card.desc}
+              <h3 className="mt-5 font-display text-2xl font-semibold">{p.name}</h3>
+              <p className="mt-1 text-xs text-muted-foreground">{p.category}</p>
+              <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {p.summary}
               </p>
-              <a
-                href="#"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm text-foreground/90 transition-colors hover:text-accent-c"
-              >
-                {card.link}
-                <ArrowRightIcon />
-              </a>
             </article>
           ))}
         </div>
@@ -223,336 +178,217 @@ export function PlatformSection() {
   );
 }
 
-/* --------------------------- Dispatch + Podcast --------------------------- */
+/* ------------------------------ The Approach ------------------------------ */
 
-/*
- * Honesty rule (Blueprint p.4): nothing below is real content. Headlines, dates and
- * read times were removed; what remains is a labelled layout placeholder until the
- * Dispatch feed and the podcast catalogue are connected.
- */
-const dispatchArticles = [
-  { img: thumbAi, category: "Sample", title: "Sample headline: daily briefs will appear here" },
+const approach = [
   {
-    img: thumbHabits,
-    category: "Sample",
-    title: "Sample headline: every article links to its source",
+    step: "01",
+    title: "AI does real work",
+    desc: "AI is part of how we research, prototype, build and operate, not a feature bolted on at the end.",
   },
   {
-    img: thumbWork,
-    category: "Sample",
-    title: "Sample headline: drafts are reviewed before they publish",
+    step: "02",
+    title: "Creative thinking sets direction",
+    desc: "We question the obvious answer first. Sometimes the right build is a platform; sometimes it’s one good automation.",
+  },
+  {
+    step: "03",
+    title: "Engineering makes it last",
+    desc: "Secure backends, tested releases and maintenance after launch. People stay accountable for what ships.",
   },
 ];
 
-export function DispatchSection() {
+export function ApproachSection() {
   return (
-    <section id="dispatch" className="scroll-mt-20 py-16 lg:py-20">
+    <section
+      id="approach"
+      className="scroll-mt-20 border-y border-border bg-graphite/40 py-16 lg:py-24"
+    >
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
-          {/* Dispatch panel */}
-          <div className="rounded-xl border border-border bg-card p-4 sm:p-6">
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <h2 className="eyebrow !text-foreground">Latest from the Dispatch</h2>
-                <StatusBadge status="building" />
-              </div>
-              <a
-                href="#"
-                className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
-              >
-                View all
-                <ArrowRightIcon />
-              </a>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-[minmax(0,11fr)_minmax(0,9fr)]">
-              {/* Featured article (sample layout) */}
-              <a
-                href="#"
-                className="group relative block min-h-[320px] overflow-hidden rounded-lg border border-border sm:min-h-[380px]"
-              >
-                <img
-                  src={planetImg}
-                  alt=""
-                  width={1024}
-                  height={1024}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(to top, color-mix(in oklab, var(--obsidian) 94%, transparent) 18%, color-mix(in oklab, var(--obsidian) 30%, transparent) 60%, transparent 100%)",
-                  }}
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <span className="meta-label inline-flex items-center rounded-full border border-border bg-obsidian/70 px-2.5 py-1">
-                    Sample
-                  </span>
-                  <h3 className="mt-3 font-display text-xl font-semibold leading-snug text-foreground sm:text-2xl">
-                    Sample headline: the Dispatch will publish short, sourced AI and tech briefs
-                    here
-                  </h3>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    Placeholder layout. Not a real article.
-                  </p>
-                </div>
-              </a>
-
-              {/* Article list (sample layout) */}
-              <div className="flex flex-col justify-between gap-4">
-                {dispatchArticles.map((article, i) => (
-                  <a
-                    key={article.title}
-                    href="#"
-                    className={`group flex items-start gap-4 py-1 ${
-                      i > 0 ? "border-t border-border pt-4" : ""
-                    }`}
-                  >
-                    <img
-                      src={article.img}
-                      alt=""
-                      width={816}
-                      height={816}
-                      loading="lazy"
-                      className="size-16 shrink-0 rounded-md object-cover"
-                    />
-                    <div className="min-w-0">
-                      <p className="meta-label">{article.category}</p>
-                      <h4 className="mt-1 text-sm font-medium leading-snug text-foreground transition-colors group-hover:text-accent-c">
-                        {article.title}
-                      </h4>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Podcast panel */}
-          <div className="overflow-hidden rounded-xl border border-border bg-card">
-            <div className="relative h-52 sm:h-60">
-              <img
-                src={podcastImg}
-                alt="The Gravitas Podcast cover"
-                width={1024}
-                height={640}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to top, color-mix(in oklab, var(--card) 90%, transparent) 2%, transparent 45%)",
-                }}
-              />
-              <button
-                type="button"
-                disabled
-                aria-label="Play episode (playback not connected yet)"
-                className="absolute bottom-4 left-4 flex size-10 cursor-not-allowed items-center justify-center rounded-full border border-control bg-obsidian/80 text-foreground opacity-80 backdrop-blur"
-              >
-                <PlayIcon className="text-xs" />
-              </button>
-            </div>
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="flex flex-wrap items-center gap-2.5 font-display text-lg font-semibold text-foreground">
-                  The Gravitas Podcast
-                  <StatusBadge status="building" />
-                </h3>
-                <a
-                  href="#"
-                  className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  View all
-                  <ArrowRightIcon />
-                </a>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                The existing episode catalogue and player connect here. No episodes are listed until
-                they do.
-              </p>
-            </div>
-          </div>
-        </div>
+        <SectionIntro
+          eyebrow="The Gravitas approach"
+          title="AI, creativity and engineering, in that order of honesty."
+        />
+        <ol className="grid gap-8 md:grid-cols-3">
+          {approach.map((a) => (
+            <li key={a.step} className="border-t border-border pt-6">
+              <span className="text-accent-gradient font-display text-sm font-bold">{a.step}</span>
+              <h3 className="mt-3 font-display text-xl font-semibold">{a.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
 }
 
-/* ------------------------ Community + Origin panel ------------------------ */
+/* -------------------------------- Dispatch -------------------------------- */
 
-/* Topic channels from the blueprint. No member counts until they are real. */
-const channels = [
-  { icon: CpuIcon, name: "Technology" },
-  { icon: BriefcaseIcon, name: "Business" },
-  { icon: HeartIcon, name: "Lifestyle" },
-  { icon: MessageCircleIcon, name: "General" },
-];
-
-const originModels = ["Claude", "ChatGPT", "Gemini"];
-
-export function CommunityOriginSection() {
+export function DispatchSection({ articles }: { articles: ArticleSummary[] }) {
   return (
-    <section id="community" className="scroll-mt-20 py-16 lg:py-20">
+    <section id="dispatch" className="scroll-mt-20 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          {/* Community */}
-          <div>
-            <SectionHeader title="Community" status="building" link="View all" />
-            <div className="grid gap-4 md:grid-cols-[minmax(0,11fr)_minmax(0,9fr)]">
-              {/* Honest empty state: no invented members, posts or vote counts */}
-              <article className="flex flex-col items-start justify-center rounded-lg border border-dashed border-control bg-card p-6">
-                <span className="flex size-9 items-center justify-center rounded-full bg-elevated text-muted-foreground">
-                  <MessageSquareIcon className="text-base" />
-                </span>
-                <h3 className="mt-5 font-display text-xl font-semibold leading-snug text-foreground">
-                  No discussions yet.
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  The community is being built. Real posts from real members will appear here once
-                  it opens.
-                </p>
-              </article>
-
-              {/* Channels */}
-              <div className="flex flex-col justify-between gap-3">
-                {channels.map((channel) => (
-                  <a
-                    key={channel.name}
-                    href="#"
-                    className="group flex items-center gap-3 rounded-md border border-border bg-card p-4 transition-colors hover:border-muted-foreground/40"
-                  >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-elevated text-muted-foreground transition-colors group-hover:text-foreground">
-                      <channel.icon className="text-base" />
-                    </span>
-                    <p className="min-w-0 truncate text-sm font-medium text-foreground">
-                      {channel.name}
-                    </p>
-                    <ChevronRightIcon className="ml-auto shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Origin */}
-          <div id="origin" className="scroll-mt-20">
-            <div className="flex h-full flex-col rounded-xl border border-border bg-card p-6 sm:p-8">
-              <div className="flex items-center gap-3">
-                <p className="font-display text-sm font-bold tracking-[0.2em] text-foreground">
-                  ORIGIN
-                </p>
-                <span className="text-xs text-muted-foreground">by GRAVITAS</span>
-                <StatusBadge status="waitlist" className="ml-auto" />
-              </div>
-              <h3 className="mt-6 font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Your AI coding partner.
-              </h3>
-              <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-                AI-assisted app building, pay-as-you-go. Intended models: Claude, ChatGPT and
-                Gemini, subject to provider access and terms.
-              </p>
-              <a
-                href="#"
-                className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent-gradient px-6 py-3 text-sm font-semibold text-primary-foreground transition-[filter] hover:brightness-110"
+        <SectionIntro
+          eyebrow="Dispatch"
+          title="The signal from inside Gravitas."
+          link={{ label: "Read Dispatch", to: "/dispatch" }}
+        />
+        {articles.length === 0 ? (
+          <p className="text-sm text-muted-foreground">New articles are on the way.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-3">
+            {articles.slice(0, 3).map((a) => (
+              <Link
+                key={a.slug}
+                to="/dispatch/$slug"
+                params={{ slug: a.slug }}
+                className="group flex flex-col"
               >
-                Join the waitlist
-                <ArrowRightIcon className="text-base" />
-              </a>
-
-              {/* Concept illustration only: nothing here works yet */}
-              <div className="mt-8 rounded-lg border border-dashed border-control bg-obsidian p-4">
-                <div className="flex items-center justify-between gap-2 border-b border-border pb-3">
-                  <span className="flex items-center gap-2.5 text-xs font-medium text-foreground">
-                    <SparklesIcon className="text-sm text-muted-foreground" />
-                    Concept illustration
-                  </span>
-                  <StatusBadge status="building" />
-                </div>
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Intended models, subject to provider access:
+                {a.cover_image ? (
+                  <img
+                    src={a.cover_image}
+                    alt=""
+                    width={1600}
+                    height={900}
+                    loading="lazy"
+                    className="aspect-video w-full rounded-lg border border-border object-cover transition-opacity group-hover:opacity-90"
+                  />
+                ) : null}
+                <p className="meta-label mt-4">
+                  {a.category} · {formatDate(a.published_at)}
                 </p>
-                <ul className="mt-3 space-y-2">
-                  {originModels.map((name) => (
-                    <li
-                      key={name}
-                      className="flex items-center gap-2.5 rounded-md border border-border bg-elevated px-3 py-2.5 text-xs text-foreground"
-                    >
-                      {name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                <h3 className="mt-2 font-display text-xl font-semibold leading-snug group-hover:underline">
+                  {a.title}
+                </h3>
+                {a.dek ? (
+                  <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{a.dek}</p>
+                ) : null}
+              </Link>
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
 }
 
-/* -------------------------------- Portfolio ------------------------------- */
+/* ----------------------------- Podcast preview ----------------------------- */
 
-/*
- * Stages as confirmed for the 1 Nov relaunch. Scoutr and The Mannuh Project have no
- * confirmed stage yet, so they read "Coming soon" rather than implying progress.
- */
-const ventures: {
-  mark: string;
-  name: string;
-  category: string;
-  status: StatusKey;
-}[] = [
-  { mark: "S", name: "SkinLabs South Africa", category: "Health & Beauty", status: "live" },
-  { mark: "J", name: "Jobbyist Africa", category: "Jobs & Recruitment", status: "live" },
-  { mark: "P", name: "Puntr.co.za", category: "Sports & Betting", status: "in-development" },
-  { mark: "K", name: "Klymb Finance", category: "Finance & Markets", status: "in-development" },
-  { mark: "L", name: "LOUDMOUF™ South Africa", category: "Consumer Brand", status: "testing" },
-  { mark: "S", name: "Scoutr", category: "Discovery & Lifestyle", status: "coming-soon" },
-  { mark: "M", name: "The Mannuh Project", category: "Details coming", status: "coming-soon" },
-];
-
-export function PortfolioSection() {
+export function PodcastSection() {
   return (
-    <section id="portfolio" className="scroll-mt-20 py-16 lg:py-20">
+    <section id="podcast" className="scroll-mt-20 py-8 lg:py-12">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="mb-6 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <h2 className="eyebrow !text-foreground">Our Portfolio</h2>
-            <span className="hidden text-xs text-muted-foreground sm:block">
-              7 ventures&ensp;·&ensp;1 ecosystem
+        <div className="grid items-center gap-8 overflow-hidden rounded-xl border border-border bg-card md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+          <img
+            src={podcastImg}
+            alt=""
+            width={1024}
+            height={768}
+            loading="lazy"
+            className="h-full max-h-80 w-full object-cover"
+          />
+          <div className="p-6 md:p-10">
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="eyebrow">Podcast</p>
+              <StatusBadge status="coming-soon" label="Season 2 · January 2027" />
+            </div>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight">
+              Building Gravitas
+            </h2>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+              The process of building Gravitas: developing products, experimenting with AI and
+              running ventures from South Africa. Season 1 [Pilot] is being brought together on
+              Dispatch.
+            </p>
+            <span className="mt-6 inline-flex items-center gap-3 text-sm text-muted-foreground">
+              <span className="flex size-10 items-center justify-center rounded-full border border-control text-foreground">
+                <PlayIcon className="text-sm" />
+              </span>
+              Episodes arrive on Dispatch soon
             </span>
           </div>
-          <a
-            href="#"
-            className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          >
-            View all ventures
-            <ArrowRightIcon />
-          </a>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {ventures.map((venture) => (
-            <article
-              key={venture.name}
-              className="group flex flex-col rounded-lg border border-border bg-card p-5 transition-colors hover:border-muted-foreground/40"
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------- Upcoming ecosystem ---------------------------- */
+
+export function EcosystemSection() {
+  const items = [
+    {
+      icon: MessageCircleIcon,
+      title: "Community",
+      to: "/community" as const,
+      desc: "A place for founders, builders, clients and collaborators to share what’s working.",
+    },
+    {
+      icon: CodeIcon,
+      title: "Origin",
+      to: "/origin" as const,
+      desc: "An AI coding assistant from Gravitas, built on how we ship software ourselves.",
+    },
+  ];
+  return (
+    <section id="ecosystem" className="scroll-mt-20 py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionIntro eyebrow="Upcoming ecosystem" title="Coming January 2027." />
+        <div className="grid gap-4 md:grid-cols-2">
+          {items.map((i) => (
+            <Link
+              key={i.title}
+              to={i.to}
+              className="group rounded-lg border border-dashed border-border p-6 transition-colors hover:border-foreground/40"
             >
-              <span className="flex size-9 items-center justify-center rounded-md bg-elevated font-display text-sm font-bold text-foreground transition-colors group-hover:text-accent-c">
-                {venture.mark}
-              </span>
-              <h3 className="mt-4 font-display text-sm font-semibold text-foreground">
-                {venture.name}
-              </h3>
-              <p className="mt-1 text-xs text-muted-foreground">{venture.category}</p>
-              <StatusBadge status={venture.status} className="mt-4 self-start" />
-            </article>
+              <div className="flex items-center justify-between">
+                <i.icon className="text-2xl text-muted-foreground" />
+                <StatusBadge status="coming-soon" label="January 2027" />
+              </div>
+              <h3 className="mt-5 font-display text-2xl font-semibold">{i.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{i.desc}</p>
+            </Link>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ Work with us ------------------------------ */
+
+export function WorkWithUsSection() {
+  return (
+    <section id="work-with-us" className="scroll-mt-20 pb-8 pt-16 lg:pt-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="relative overflow-hidden rounded-xl border border-border bg-card px-6 py-14 text-center md:px-12">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(60% 80% at 50% 0%, color-mix(in oklab, var(--accent-b) 18%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative">
+            <p className="eyebrow">Work with us</p>
+            <h2 className="mx-auto mt-3 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">
+              Have something that probably shouldn’t exist yet?
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-sm text-muted-foreground">
+              Tell us what you’re building. We’ll tell you honestly what it takes.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link to="/contact" className={buttonStyles.primary}>
+                Start a Project
+                <ArrowRightIcon />
+              </Link>
+              <a href={`mailto:${contact.general}`} className={buttonStyles.secondary}>
+                {contact.general}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

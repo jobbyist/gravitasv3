@@ -13,6 +13,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Preloader, PRELOADER_BOOT_SCRIPT } from "../components/brand/preloader";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AuthProvider } from "../lib/auth";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -75,6 +77,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 const OG_IMAGE = "https://gravitas.wtf/og-image.png";
+const DEFAULT_TITLE = "GRAVITAS.WTF | An AI-First Venture Studio";
+const DEFAULT_DESCRIPTION =
+  "Gravitas is an AI-first venture studio building things that probably shouldn't exist. Until they do. Studio services, ventures and Dispatch, from South Africa.";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -83,19 +88,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#090909" },
       { name: "color-scheme", content: "dark" },
-      { title: "Gravitas v3 — Build what comes next." },
-      {
-        name: "description",
-        content:
-          "Gravitas is an independent, community-first AI venture studio building the next generation of digital products, media experiences, tools and services.",
-      },
+      { title: DEFAULT_TITLE },
+      { name: "description", content: DEFAULT_DESCRIPTION },
       { name: "author", content: "Gravitas Industries (Pty) Ltd" },
-      { property: "og:title", content: "Gravitas v3 — Build what comes next." },
-      {
-        property: "og:description",
-        content:
-          "Independent, community-first AI venture studio. Ideas. People. Products. Gravitas.",
-      },
+      { property: "og:title", content: DEFAULT_TITLE },
+      { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Gravitas" },
       { property: "og:url", content: "https://gravitas.wtf" },
@@ -103,11 +100,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Gravitas v3. Build what comes next." },
+      {
+        property: "og:image:alt",
+        content: "GRAVITAS.WTF. Building things that probably shouldn't exist. Until they do.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Gravitas v3 — Build what comes next." },
+      { name: "twitter:title", content: DEFAULT_TITLE },
       { name: "twitter:image", content: OG_IMAGE },
-      { name: "twitter:image:alt", content: "Gravitas v3. Build what comes next." },
+      {
+        name: "twitter:image:alt",
+        content: "GRAVITAS.WTF. Building things that probably shouldn't exist. Until they do.",
+      },
     ],
     links: [
       // Fonts are self-hosted (public/fonts). Preload the two variable faces used above the fold.
@@ -135,6 +138,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16.png" },
       { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   shellComponent: RootShell,
@@ -168,8 +172,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AuthProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <Toaster />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
